@@ -8,12 +8,12 @@ export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
   
   @Get()
-  getReservationList(): string {
+  getReservationList() {
     return this.reservationService.getReservationList();
   }
 
   @Post()
-  createReservation(): string {
+  createReservation() {
     return this.reservationService.createReservation();
   }
 

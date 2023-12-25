@@ -1,13 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/services/prisma.service';
 
 @Injectable()
 export class ReservationService {
-  getReservationList(): string {
-    return 'This action returns all reservations';
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async getReservationList() {
+    const reservations = await this.prismaService.reservation.findMany();
+
+    return reservations;
   }
 
-  createReservation(): string {
-    return 'This action creates a reservation';
+  async createReservation() {
+    const reservation = await this.prismaService.reservation.create({
+      data: {
+        title: 'title',
+        username: 'username',
+        date: new Date(),
+        time: new Date(),
+      },
+    });
+
+    return reservation;
   }
 
   updateReservation(): string {
