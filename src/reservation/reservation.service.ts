@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.service';
-import { CreateReservationDto } from './requests/create-reservation.request';
+import {
+  CreateReservationDto,
+  UpdateReservationDto,
+} from './requests/reservation.request';
 
 @Injectable()
 export class ReservationService {
@@ -25,8 +28,18 @@ export class ReservationService {
     return reservation;
   }
 
-  updateReservation(): string {
-    return 'This action updates a reservation';
+  updateReservation(id: string, updateReservationDto: UpdateReservationDto) {
+    const reservation = this.prismaService.reservation.update({
+      where: { id: id },
+      data: {
+        title: updateReservationDto.title,
+        username: updateReservationDto.username,
+        time: updateReservationDto.time,
+        description: updateReservationDto.description,
+      },
+    });
+
+    return reservation;
   }
 
   deleteReservation(): string {

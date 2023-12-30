@@ -1,7 +1,18 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateReservationDto } from './requests/create-reservation.request';
+import {
+  CreateReservationDto,
+  UpdateReservationDto,
+} from './requests/reservation.request';
 
 @ApiTags('Reservation')
 @Controller('reservation')
@@ -18,9 +29,12 @@ export class ReservationController {
     return this.reservationService.createReservation(createReservationDto);
   }
 
-  @Put()
-  updateReservation(): string {
-    return this.reservationService.updateReservation();
+  @Put(':id')
+  updateReservation(
+    @Param('id') id: string,
+    @Body() updateReservationDto: UpdateReservationDto,
+  ) {
+    return this.reservationService.updateReservation(id, updateReservationDto);
   }
 
   @Delete()

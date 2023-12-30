@@ -32,3 +32,5 @@ export class CreateReservationDto {
   @Length(1, 250)
   description?: string;
 }
+
+export class UpdateReservationDto extends CreateReservationDto {}
