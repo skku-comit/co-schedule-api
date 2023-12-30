@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.service';
+import { CreateReservationDto } from './requests/create-reservation.request';
 
 @Injectable()
 export class ReservationService {
@@ -11,13 +12,13 @@ export class ReservationService {
     return reservations;
   }
 
-  async createReservation() {
+  async createReservation(createReservationDto: CreateReservationDto) {
     const reservation = await this.prismaService.reservation.create({
       data: {
-        title: 'title',
-        username: 'username',
-        date: new Date(),
-        time: new Date(),
+        title: createReservationDto.title,
+        username: createReservationDto.username,
+        time: createReservationDto.time,
+        description: createReservationDto.description,
       },
     });
 
