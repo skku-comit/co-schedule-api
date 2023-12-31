@@ -37,8 +37,8 @@ export class ReservationController {
     return this.reservationService.updateReservation(id, updateReservationDto);
   }
 
-  @Delete()
-  deleteReservation(): string {
-    return this.reservationService.deleteReservation();
+  @Delete(':id')
+  deleteReservation(@Param('id') id: string) {
+    return this.reservationService.deleteReservation(id);
   }
 }

@@ -42,7 +42,11 @@ export class ReservationService {
     return reservation;
   }
 
-  deleteReservation(): string {
-    return 'This action deletes a reservation';
+  deleteReservation(id) {
+    const reservation = this.prismaService.reservation.delete({
+      where: { id: id },
+    });
+
+    return reservation;
   }
 }
