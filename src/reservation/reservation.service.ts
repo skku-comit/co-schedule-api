@@ -4,18 +4,19 @@ import {
   CreateReservationDto,
   UpdateReservationDto,
 } from './requests/reservation.request';
+import { Reservation } from '@prisma/client';
 
 @Injectable()
 export class ReservationService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getReservationList() {
+  async getReservationList(): Promise<Reservation[]> {
     const reservations = await this.prismaService.reservation.findMany();
 
     return reservations;
   }
 
-  async createReservation(createReservationDto: CreateReservationDto) {
+  async createReservation(createReservationDto: CreateReservationDto): Promise<string>{
     const reservation = await this.prismaService.reservation.create({
       data: {
         title: createReservationDto.title,
@@ -25,10 +26,13 @@ export class ReservationService {
       },
     });
 
-    return reservation;
+    return reservation.id;
   }
 
-  async updateReservation(id: string, updateReservationDto: UpdateReservationDto) {
+  async updateReservation(
+    id: string,
+    updateReservationDto: UpdateReservationDto,
+  ): Promise<Reservation>{
     const reservation = await this.prismaService.reservation.update({
       where: { id: id },
       data: {
