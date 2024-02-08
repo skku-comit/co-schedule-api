@@ -14,22 +14,22 @@ import {
   UpdateReservationDto,
 } from './requests/reservation.request';
 
-@ApiTags('Reservation')
-@Controller('reservation')
+@ApiTags('유데미 예약 API')
+@Controller('/reservation')
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
 
-  @Get()
+  @Get('/')
   getReservationList() {
     return this.reservationService.getReservationList();
   }
 
-  @Post()
+  @Post('/')
   createReservation(@Body() createReservationDto: CreateReservationDto) {
     return this.reservationService.createReservation(createReservationDto);
   }
 
-  @Put(':id')
+  @Put('/:id')
   updateReservation(
     @Param('id') id: string,
     @Body() updateReservationDto: UpdateReservationDto,
@@ -37,7 +37,7 @@ export class ReservationController {
     return this.reservationService.updateReservation(id, updateReservationDto);
   }
 
-  @Delete(':id')
+  @Delete('/:id')
   deleteReservation(@Param('id') id: string) {
     return this.reservationService.deleteReservation(id);
   }

@@ -19,7 +19,7 @@ export class ReservationService {
     const reservation = await this.prismaService.reservation.create({
       data: {
         title: createReservationDto.title,
-        username: createReservationDto.username,
+        name: createReservationDto.name,
         time: createReservationDto.time,
         description: createReservationDto.description,
       },
@@ -28,12 +28,12 @@ export class ReservationService {
     return reservation;
   }
 
-  updateReservation(id: string, updateReservationDto: UpdateReservationDto) {
-    const reservation = this.prismaService.reservation.update({
+  async updateReservation(id: string, updateReservationDto: UpdateReservationDto) {
+    const reservation = await this.prismaService.reservation.update({
       where: { id: id },
       data: {
         title: updateReservationDto.title,
-        username: updateReservationDto.username,
+        name: updateReservationDto.name,
         time: updateReservationDto.time,
         description: updateReservationDto.description,
       },
@@ -42,8 +42,8 @@ export class ReservationService {
     return reservation;
   }
 
-  deleteReservation(id) {
-    const reservation = this.prismaService.reservation.delete({
+  async deleteReservation(id) {
+    const reservation = await this.prismaService.reservation.delete({
       where: { id: id },
     });
 

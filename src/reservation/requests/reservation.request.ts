@@ -19,7 +19,7 @@ export class CreateReservationDto {
   @IsNotEmpty()
   @IsString()
   @Length(1, 250)
-  username: string;
+  name: string;
 
   @ApiProperty({ description: '시간', example: '2021-01-01T00:00:00.000Z' })
   @IsNotEmpty()
