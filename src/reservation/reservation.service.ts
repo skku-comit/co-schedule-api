@@ -16,6 +16,14 @@ export class ReservationService {
     return reservations;
   }
 
+  async getReservation(id: string): Promise<Reservation> {
+    const reservation = await this.prismaService.reservation.findUnique({
+      where: { id: id },
+    });
+
+    return reservation;
+  }
+
   async createReservation(createReservationDto: CreateReservationDto): Promise<string>{
     const reservation = await this.prismaService.reservation.create({
       data: {

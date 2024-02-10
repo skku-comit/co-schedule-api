@@ -23,14 +23,6 @@ import { DeleteReservationResponse } from './responses/delete-reservation.respon
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
 
-  @ApiOperation({ summary: '예약 목록 조회' })
-  @Get('/')
-  async getReservationList(): Promise<ReservationListResponse> {
-    const reservations = await this.reservationService.getReservationList();
-
-    return { reservations };
-  }
-
   @ApiOperation({ summary: '예약 생성' })
   @Post('/')
   async createReservation(
@@ -42,20 +34,43 @@ export class ReservationController {
     return { id: reservationId };
   }
 
+  @ApiOperation({ summary: '예약 목록 조회' })
+  @Get('/')
+  async getReservationList(): Promise<ReservationListResponse> {
+    const reservations = await this.reservationService.getReservationList();
+    
+    return { reservations };
+  }
+
+  @ApiOperation({ summary: '예약 상세 조회' })
+  @Get('/:id')
+  async getReservation(
+    @Param('id') id: string,
+  ) {
+    const reservation = await this.reservationService.getReservation(id);
+
+    return { reservation };
+  }
+
   @ApiOperation({ summary: '예약 수정' })
   @Put('/:id')
   async updateReservation(
     @Param('id') id: string,
     @Body() updateReservationDto: UpdateReservationDto,
-  ): Promise<UpdateReservationResponse>{
-    const reservation = await this.reservationService.updateReservation(id, updateReservationDto);
+  ): Promise<UpdateReservationResponse> {
+    const reservation = await this.reservationService.updateReservation(
+      id,
+      updateReservationDto,
+    );
 
     return reservation;
   }
 
   @ApiOperation({ summary: '예약 삭제' })
   @Delete('/:id')
-  deleteReservation(@Param('id') id: string): Promise<DeleteReservationResponse>{
+  deleteReservation(
+    @Param('id') id: string,
+  ): Promise<DeleteReservationResponse> {
     return this.reservationService.deleteReservation(id);
   }
 }
